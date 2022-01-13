@@ -1,0 +1,20 @@
+This is the framework I've come up with. Steps to run -
+
+bundle install
+bundle exec rake db:migrate
+bundle exec rake db:seed
+bundle exec puma
+
+
+Check what happens in each of the APIs -
+
+localhost:9292/
+localhost:9292/error/
+localhost:9292/api/
+localhost:9292/api/user/
+localhost:9292/somerandompath
+
+
+I've tried to remove redundant code as much as possible. I still have to add another section for the services like email etc.
+
+Please go through it. We'll discuss it later in the day
