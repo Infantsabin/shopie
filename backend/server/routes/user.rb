@@ -1,4 +1,4 @@
-App.route('api') do |r|
+App.route('api/auth') do |r|
     r.on 'user' do
         r.on Integer do |id|
             r.get do

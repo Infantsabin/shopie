@@ -10,8 +10,11 @@ class User < Sequel::Model
 	end
 
 	def self.verify data
-		user = User.where(data).first
+		user = User.where(email: data[:email]).first
 		raise "Invalid User" unless user
+
+		decrypted_password = Helper.decrypt_password(user.password_digest)
+		raise "Incorrect Password" unless decrypted_password == data[:password_digest]
 
 		login_token = Helper.secure_token
 		user.update(token: login_token)

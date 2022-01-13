@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from "react-router-dom"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,6 +11,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Copyright(props) {
     return (
@@ -27,19 +31,42 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    axios.post('http://localhost:9292/api/auth/user/create', {first_name: data.get('firstName'), last_name: data.get('lastName'),email: data.get('email'),password_digest: data.get('password')})
+        .then(response => {
+            toast.success('Signed-Up successfully..!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });          
+            navigate('/')
+        })
+        .catch(error => {
+            toast.error("Oops...! Something wrong...", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
+            console.error('There was an error!', error);
+        });
   };
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
+        <ToastContainer />
         <CssBaseline />
         <Box
           sx={{

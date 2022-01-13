@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from "react-router-dom"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -11,6 +11,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Copyright(props) {
   return (
@@ -29,28 +32,45 @@ const theme = createTheme();
 
 export default function SignIn() {
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  // const history = useHistory();
-
+ 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
-    console.log(email, password)
+    const data = new FormData(event.currentTarget);
 
-    if (email && password) {
-      navigate('/home')
-    }
+    axios.post('http://localhost:9292/api/auth/user/verify', {email: data.get('email'),password_digest: data.get('password')})
+        .then(response => {
+            toast.success('Signed-In successfully..!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });          
+            localStorage.setItem('token', response.data.values.token);
+            navigate('/home')
+        })
+        .catch(error => {
+            toast.error('Oops!..Wrong credentials..!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
+            console.error('There was an error!', error);
+        });
   };
     return (
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
+          <ToastContainer />
           <CssBaseline />
           <Box
             sx={{
@@ -74,8 +94,8 @@ export default function SignIn() {
                 id="email"
                 label="Email Address"
                 name="email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
+                // onChange={(e) => setEmail(e.target.value)}
+                // value={email}
                 autoComplete="email"
                 autoFocus
               />
@@ -87,8 +107,8 @@ export default function SignIn() {
                 label="Password"
                 type="password"
                 id="password"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
+                // onChange={(e) => setPassword(e.target.value)}
+                // value={password}
                 autoComplete="current-password"
               />
               <Grid container justifyContent="flex-end">
