@@ -6,7 +6,7 @@ Faker::Config.random = nil
 
 password_digest = BCrypt::Password.create('password')
 
-DB[:users].insert({first_name: 'Test',last_name: 'Test',email: 'test@email.com',password_digest: password_digest, token: Faker::Alphanumeric.alphanumeric(number: 10, min_alpha: 3)})
+DB[:users].insert({first_name: 'Test', last_name: 'User',email: 'test@email.com',password_digest: password_digest, token: Faker::Alphanumeric.alphanumeric(number: 10, min_alpha: 3)})
 
 # users_arr = []
 # users_arr.push(

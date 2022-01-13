@@ -9,6 +9,7 @@ Sequel.migration do
 			String   :token,             default: nil
 			DateTime :created_at,        default: Sequel::CURRENT_TIMESTAMP
 			DateTime :updated_at,        default: Sequel::CURRENT_TIMESTAMP
+			DateTime :deleted_at,        default: nil
 		end
 	end
 end
