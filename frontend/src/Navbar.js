@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from "react-router-dom"
 import Toolbar from '@mui/material/Toolbar';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -12,6 +13,12 @@ import { styled } from '@mui/material/styles';
 import './Home.css';
 
 function Navbar(props) {
+    const navigate = useNavigate();
+    const handleLogout = (event) => {
+        event.preventDefault();
+        localStorage.clear();
+        navigate('/')
+    }
     const StyledBadge = styled(Badge)(({ theme }) => ({
         '& .MuiBadge-badge': {
           border: `2px solid ${theme.palette.background.paper}`,
@@ -48,7 +55,7 @@ function Navbar(props) {
                     </StyledBadge>
                 </IconButton>
                 <LightTooltip title="logout">
-                    <LogoutIcon sx={{ mr: 2 }} />
+                    <LogoutIcon sx={{ mr: 2 }} onClick={handleLogout} />
                 </LightTooltip>
             </div>
             </Toolbar>

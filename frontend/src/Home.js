@@ -9,29 +9,16 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import IconButton from '@mui/material/IconButton';
 import Navbar from './Navbar'
+import Footer from './Footer'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="http://localhost:3000">
-        Shopie
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const cards = [1, 2, 3, 4];
 
@@ -86,8 +73,8 @@ export default function Album() {
         <Box
           sx={{
             bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
+            pt: 2,
+            pb: 2,
           }}
         >
         </Box>
@@ -130,7 +117,7 @@ export default function Album() {
       </main>
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Copyright />
+        <Footer />
       </Box>
       {/* End footer */}
     </ThemeProvider>

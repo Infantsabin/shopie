@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -14,24 +14,20 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-function Copyright(props) {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" href="http://localhost:3000">
-          Shopie
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
+import Footer from './Footer'
 
 const theme = createTheme();
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const token = localStorage.getItem('token')
+ 
+  useEffect(() => {
+    if (token) {
+        navigate('/home')
+    }
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -144,8 +140,12 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
+        {/* Footer */}
+        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
+            <Footer />
+        </Box>
+      {/* End footer */}
     </ThemeProvider>
   );
 }
