@@ -24,7 +24,7 @@ const cards = [1, 2, 3, 4];
 
 const theme = createTheme();
 
-export default function Album() {
+export default function Dashboard() {
     const navigate = useNavigate();
     const [name, setName] = useState("Shopie User");
     const [count, setCount] = useState(0);

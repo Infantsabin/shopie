@@ -24,7 +24,7 @@ export default function SignUp() {
  
   useEffect(() => {
     if (token) {
-        navigate('/home')
+        navigate('/dashboard')
     }
   }, []);// eslint-disable-line react-hooks/exhaustive-deps
 

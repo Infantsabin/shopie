@@ -27,7 +27,7 @@ export default function SignIn() {
  
   useEffect(() => {
     if (token) {
-        navigate('/home')
+        navigate('/dashboard')
     }
   }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
@@ -47,7 +47,7 @@ export default function SignIn() {
                 progress: undefined,
                 });          
             localStorage.setItem('token', response.data.values.token);
-            navigate('/home')
+            navigate('/dashboard')
         })
         .catch(error => {
             toast.error('Oops!..Wrong credentials..!', {
