@@ -104,9 +104,7 @@ export default function Dashboard() {
                         <Typography variant="body2" color="text.secondary">
                             $10
                         </Typography>
-                        <IconButton color="primary" aria-label="add to shopping cart">
-                            <Button variant="outlined" startIcon={<AddShoppingCartIcon />} onClick={() => setCount(count + 1)}>Add to Cart</Button>
-                        </IconButton>
+                        <Button variant="outlined" startIcon={<AddShoppingCartIcon />} onClick={() => setCount(count + 1)}>Add to Cart</Button>
                     </div>
                 </CardContent>
                 </Card>
