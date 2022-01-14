@@ -1,24 +1,31 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
+import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
+import Avatar from '@mui/material/Avatar';
+import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { red } from '@mui/material/colors';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
+import Button from '@mui/material/Button';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import IconButton from '@mui/material/IconButton';
 import Navbar from './Navbar'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="http://localhost:3000">
+        Shopie
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -26,15 +33,54 @@ function Copyright() {
   );
 }
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const cards = [1, 2, 3, 4];
 
 const theme = createTheme();
 
 export default function Album() {
+    const navigate = useNavigate();
+    const [name, setName] = useState("Shopie User");
+    const [count, setCount] = useState(0);
+    const token = localStorage.getItem('token')
+
+    useEffect(() => {
+        if (!token) {
+            navigate('/')
+        } else {
+            axios.get('http://localhost:9292/api/auth/user', { params: {token: token}})
+            .then(response => {
+                setName(response.data.values.name);
+                toast.success(`Welcome..! ${response.data.values.name}`, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    });          
+            })
+            .catch(error => {
+                toast.error("Oops! Please sign-in again...", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    });
+                console.error('There was an error!', error);
+                navigate('/')
+            });
+        }
+      }, []);// eslint-disable-line react-hooks/exhaustive-deps
+    
+
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-        <Navbar />
+      <ToastContainer />
+        <Navbar name={name} count={count}/>
       <main>
         {/* Hero unit */}
         <Box
@@ -50,31 +96,32 @@ export default function Album() {
           <Grid container spacing={4}>
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardMedia
+                <Card sx={{ maxWidth: 345 }}>
+                <CardHeader
+                    avatar={
+                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                        R
+                    </Avatar>
+                    }
+                    title="Shrimp and Chorizo Paella"
+                    subheader="September 14, 2016"
+                />
+                <CardMedia
                     component="img"
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
-                  </CardActions>
+                    height="194"
+                    image="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZHVjdHxlbnwwfHwwfHw%3D&w=1000&q=80"
+                    alt="Paella dish"
+                />
+                <CardContent>
+                    <div className='cart-bottom'>
+                        <Typography variant="body2" color="text.secondary">
+                            $10
+                        </Typography>
+                        <IconButton color="primary" aria-label="add to shopping cart">
+                            <Button variant="outlined" startIcon={<AddShoppingCartIcon />} onClick={() => setCount(count + 1)}>Add to Cart</Button>
+                        </IconButton>
+                    </div>
+                </CardContent>
                 </Card>
               </Grid>
             ))}
@@ -83,17 +130,6 @@ export default function Album() {
       </main>
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
         <Copyright />
       </Box>
       {/* End footer */}

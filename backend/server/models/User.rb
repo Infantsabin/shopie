@@ -27,6 +27,17 @@ class User < Sequel::Model
 		User.create(data)
 	end
 
+	def self.details login_token
+		raise "Invalid Login token..." unless login_token
+
+		user = self.where(token: login_token).first
+		raise "User Logged in another device.." unless user
+		{
+			name: user.first_name + " " + user.last_name,
+			email: user.email
+		}
+	end
+
 	def self.first_user data
 		user = self.first
 		{
