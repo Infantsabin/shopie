@@ -27,6 +27,8 @@ GEM
       roda (>= 3.19.0)
       tty-logger (>= 0.3, < 1.0)
     sequel (5.37.0)
+    sequel-paranoid (0.7.0)
+      sequel
     sequel_secure_password (0.2.15)
       bcrypt (>= 3.1, < 4.0)
       sequel (>= 4.1.0, < 6.0)
@@ -53,9 +55,10 @@ DEPENDENCIES
   roda (~> 3.46.0)
   roda-enhanced_logger (~> 0.4.0)
   sequel (~> 5.37.0)
+  sequel-paranoid (~> 0.7.0)
   sequel_secure_password (~> 0.2.0)
   sqlite3 (~> 1.4.0)
   tilt (~> 2.0.10)
 
 BUNDLED WITH
-   2.2.4
+   2.2.11

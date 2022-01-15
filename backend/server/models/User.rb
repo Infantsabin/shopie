@@ -4,6 +4,10 @@ require_relative '../helper/basic_helper'
 class User < Sequel::Model
 	plugin :secure_password
 
+	one_to_many		:cart_items,
+					:key	=> :user_id,
+					:class  => :UserCart
+
 	def validate
 		super
 		validates_unique(:email, :message=>'already exists'){ |ds| ds.where(:deleted_at => nil) }
@@ -32,9 +36,12 @@ class User < Sequel::Model
 
 		user = self.where(token: login_token).first
 		raise "User Logged in another device.." unless user
+
+		cart_count = user.cart_items_dataset.sum(:count)
 		{
 			name: user.first_name + " " + user.last_name,
-			email: user.email
+			email: user.email,
+			cart_count: cart_count || 0
 		}
 	end
 

@@ -4,8 +4,8 @@ Sequel.migration do
 			primary_key :id
             foreign_key :user_id,        :users, :key => :id, :on_delete	=> :cascade
             foreign_key :product_id,     :products, :key => :id, :on_delete	=> :cascade
-            foreign_key :order_id,     :orders, :key => :id, :on_delete	=> :cascade
-			Integer  :count,	         default: 0
+            foreign_key :order_id,       :orders, :key => :id, :on_delete	=> :cascade
+			Integer  :count,	         default: 1
 			DateTime :created_at,        default: Sequel::CURRENT_TIMESTAMP
 			DateTime :updated_at,        default: Sequel::CURRENT_TIMESTAMP
 			DateTime :deleted_at,        default: nil

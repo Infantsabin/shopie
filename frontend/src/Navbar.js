@@ -41,7 +41,7 @@ function Navbar(props) {
             <div>
                 <Toolbar className='navbar-menu'>
             <div>
-            <Typography variant="h6" color="inherit" noWrap>
+            <Typography variant="h5" color="inherit" noWrap onClick={()=> navigate('/dashboard')}>
                 Shopie
             </Typography>
             </div>
@@ -51,7 +51,7 @@ function Navbar(props) {
                 </LightTooltip>
                 <IconButton aria-label="cart" style={{marginRight: '14px'}}>
                     <StyledBadge badgeContent={props.count} color="success">
-                        <ShoppingCartIcon style={{color: '#fff'}} />
+                        <ShoppingCartIcon style={{color: '#fff'}} onClick={()=> navigate('/cart')} />
                     </StyledBadge>
                 </IconButton>
                 <LightTooltip title="logout">

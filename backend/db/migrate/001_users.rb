@@ -4,6 +4,7 @@ Sequel.migration do
 			primary_key :id
 			String   :first_name,        null: false
 			String   :last_name,	     null: false
+			String   :role,              default: 'c'
 			String   :email,             null: false, unique: true
 			String   :password_digest,   null: false
 			String   :token,             default: nil

@@ -49,7 +49,7 @@ class App < Roda
 		request.body.rewind
 		@data = JSON.parse(body, symbolize_names: true) rescue {}
 
-		@token =  params["token"] || nil
+		@token =  params["token"] || @data[:token] || nil
 	end
 
 	route do |r|
