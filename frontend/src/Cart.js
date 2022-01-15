@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
@@ -54,14 +57,6 @@ export default function Cart() {
       <Navbar name={name} count={count}/>
       <main>
         {/* Hero unit */}
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 2,
-            pb: 2,
-          }}
-        >
-        </Box>
         <Container sx={{ py: 8 }} maxWidth="ms">
           <Grid container spacing={2}>
             {cards.map((card) => (
@@ -99,8 +94,8 @@ export default function Cart() {
                             >
                               <RemoveIcon fontSize="small" />
                             </Button>
-                            <Button>
-                              1
+                            <Button disabled>
+                              {count}
                             </Button>
                             <Button
                               aria-label="increase"
@@ -113,41 +108,77 @@ export default function Cart() {
                           </ButtonGroup>
                         </Grid>
                       </Grid>
-                      <Grid item>
-                        <Typography variant="subtitle1" component="div">
-                          $19.00
-                        </Typography>
+                      <Grid>
+                        <Grid item style={{marginBottom: '60px'}}>
+                            <IconButton aria-label="delete">
+                              <CloseIcon />
+                            </IconButton>
+                          </Grid>
+                        <Grid item>
+                          <Typography variant="subtitle1" component="div">
+                            $19.00
+                          </Typography>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
                 </Paper>
               </Grid>
             ))}
-            <Grid item xs={4}>
-              <Card variant="outlined">
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Cart Details:
+          <Grid item xs={4} style={{position: 'fixed', right: 0,margin: '16px',top: '100px', bottom: '14px', width: 'inherit'}}>
+            <Card variant="outlined">
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Cart Details:
+                </Typography>
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    Subtotal:   $100
                   </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                      Subtotal:   $100
-                    </Typography>
-                    <Typography variant="body2">
-                      Total:   $100
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button
-                    type="submit"
+                  <Typography variant="body2">
+                    Total:   $100
+                  </Typography>
+              </CardContent>
+              <CardActions>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Checkout
+              </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+          <Grid item xs={4} style={{position: 'fixed', right: 0,margin: '16px', bottom: '14px', width: 'inherit'}}>
+            <Card variant="outlined">
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Coupon:
+                </Typography>
+                <Grid item>
+                  <TextField
+                    required
+                    id="expDate"
+                    label="Promotion Code"
                     fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Checkout
-                </Button>
-                </CardActions>
-              </Card>
-            </Grid>
+                    autoComplete="cc-exp"
+                    variant="standard"
+                  />
+                </Grid>
+              </CardContent>
+              <CardActions>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Apply Coupon
+              </Button>
+              </CardActions>
+            </Card>
+          </Grid>
           </Grid>
         </Container>
       </main>
