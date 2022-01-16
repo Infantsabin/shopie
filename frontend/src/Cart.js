@@ -244,24 +244,50 @@ export default function Cart() {
                   <Typography gutterBottom variant="h5" component="div">
                     Cart Details:
                   </Typography>
-                  <Typography color="text.secondary">
+                  <Typography color="text.secondary" style={{marginBottom: '10px', fontWeight:'600'}}>
                     Subtotal:
                   </Typography>
-                    {cards.map((card) => (
-                     <Typography key={card.id} variant="body2" color="text.secondary">
-                        {card.name}: {card.count} x {card.price} =  &#8377; {card.subtotal_price}
-                      </Typography>
-                    ))}
-                      
+                  {cards.map((card) => (
+                      <Grid container>
+                        <Grid md={6}>
+                        <Typography key={card.id} variant="body2" color="text.secondary">
+                           {card.name}:
+                         </Typography>
+                        </Grid>
+                        <Grid md={6}>
+                        <Typography key={card.id} variant="body2" color="text.secondary">
+                           {card.count} x {card.price} =  &#8377; {card.subtotal_price}
+                         </Typography>
+                        </Grid>
+                      </Grid>
+                  ))}
                      
                   {basketDiscount && basketDiscount !== 0 ? (
-                      <>
-                        <Typography color="text.secondary">
-                          BasketDiscount: &#8377; {basketDiscount} { `( > ₹${basketPriceRange})`}
-                        </Typography>
-                        <Typography color="text.secondary">
-                              Total:  <strike>&#8377; {total}</strike> {' '} &#8377; {total - basketDiscount}
-                        </Typography>
+                    <>
+                       <Grid container style={{marginTop: '10px'}}>
+                          <Grid md={6}>
+                            <Typography color="text.secondary" style={{fontWeight:'600'}}>
+                              Basket Discount:
+                            </Typography>
+                      </Grid>
+                          <Grid md={6}>
+                            <Typography color="text.secondary">
+                              &#8377; {basketDiscount} { `(Basket rate > ₹${basketPriceRange})`}
+                            </Typography>
+                      </Grid>
+                      </Grid>
+                    <Grid container style={{marginTop: '10px'}}>
+                      <Grid md={6} >
+                            <Typography color="text.secondary" style={{fontWeight:'700'}}>
+                                  Total:
+                            </Typography>
+                      </Grid>
+                      <Grid md={6}>
+                            <Typography color="text.secondary">
+                                  <strike>&#8377; {total}</strike> {' '} &#8377; {total - basketDiscount}
+                            </Typography>
+                      </Grid>
+                      </Grid>
                       </>
                     ) : (
                         <Typography color="text.secondary">

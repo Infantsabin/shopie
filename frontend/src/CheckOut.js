@@ -78,7 +78,7 @@ export default function Checkout() {
       <CssBaseline />
       <Navbar name={name} />
       {/* <NotificationAlert className='notify' ref={notificationRef} /> */}
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+      <Container component="main" maxWidth="sm" sx={{ mb: 4 }} className="cart-main">
         <Paper
           variant="outlined"
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}

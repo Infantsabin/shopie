@@ -49,7 +49,6 @@ export default function Dashboard() {
             })
             .catch(error => {
                 console.error('There was an error!', error);
-                navigate('/')
             });
         }
       }, []);// eslint-disable-line react-hooks/exhaustive-deps

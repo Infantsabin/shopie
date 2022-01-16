@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Navigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import { styled } from '@mui/material/styles';
@@ -45,14 +45,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // ];
 
 export default function App() {
-    //  const navigate = useNavigate();
+     const navigate = useNavigate();
     const [name, setName] = useState("Shopie User");
     const [cards, setCards] = useState([]);
     const token = localStorage.getItem('token')
 
     useEffect(() => {        
         if (!token) {
-            Navigate('/')
+            navigate('/')
         } else {
             axios.get('http://localhost:9292/api/product')
             .then(response => {
