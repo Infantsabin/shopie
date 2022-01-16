@@ -35,7 +35,7 @@ class UserCart < Sequel::Model
 
         overall_discount = OverallDiscount.where{price_range <= total}.order(:price_range).last
 
-        return subtotal, total, overall_discount
+        return subtotal.ceil(2), total.ceil(2), overall_discount
 	end
 
     def delete_cart_item
@@ -46,7 +46,7 @@ class UserCart < Sequel::Model
 
         overall_discount = OverallDiscount.where{price_range <= total}.order(:price_range).last
 
-        return total, overall_discount
+        return total.ceil(2), overall_discount
 	end
 
     def self.get_all_cart_details cur_user
@@ -75,6 +75,6 @@ class UserCart < Sequel::Model
         overall_total = result.sum {|h| h[:subtotal_price] }.to_f || 0
         overall_discount = OverallDiscount.where{price_range <= overall_total}.order(:price_range).last
 
-        return result, cart_count, overall_total, overall_discount
+        return result, cart_count, overall_total.ceil(2), overall_discount
 	end
 end

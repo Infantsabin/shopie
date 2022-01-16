@@ -17,7 +17,7 @@ class Product < Sequel::Model
                 name: product.name,
                 price: product.price,
                 discount: product.discount,
-                discount_price: (product.price.to_f - (product.price.to_f * product.discount.to_f/100)).to_f,
+                discount_price: (product.price.to_f - (product.price.to_f * product.discount.to_f/100)).ceil(2),
                 code: product.code,
                 image_url: product.image_url,
                 created_at: product.created_at,
