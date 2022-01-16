@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from "react-router-dom";
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
@@ -8,40 +8,48 @@ import Grid from '@mui/material/Grid';
 import ShippingNext from "./ShippingNext";
 import axios from "axios";
 
-const products = [
-  {
-    name: 'Product 1',
-    desc: 'A nice thing',
-    price: '$9.99',
-  },
-  {
-    name: 'Product 2',
-    desc: 'Another thing',
-    price: '$3.45',
-  },
-  {
-    name: 'Product 3',
-    desc: 'Something else',
-    price: '$6.51',
-  },
-  {
-    name: 'Product 4',
-    desc: 'Best thing of all',
-    price: '$14.11',
-  },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
+const products = [];
 
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
+const addresses = [];
+const payments = [];
 
 export default function Review(props) {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
+  const [addresses, setAddresses] = useState([]);
+  const [payments, setPayments] = useState([]);
+  const [total, setTotal] = useState(0);
+  const token = localStorage.getItem("token");
+
+   useEffect(() => {
+    if (!token) {
+      navigate("/");
+    } else {
+      axios
+        .get("http://localhost:9292/api/cart", { params: { token: token } })
+        .then((response) => {
+          setProducts(response.data.values);
+          setTotal(response.data.overall_total);
+        })
+        .catch((error) => {
+          console.error("There was an error!", error);
+        });
+
+      axios
+        .get(`http://localhost:9292/api/check-out/${props.orderId}`, { params: { token: token } })
+        .then((response) => { 
+          console.log(response.data.values)
+          setAddresses(response.data.values.shipping_address);
+          setPayments(response.data.values.payment_detail);
+          console.log(addresses, payments)
+          console.log(addresses.name)
+        })
+        .catch((error) => {
+          console.error("There was an error!", error);
+        });
+    }
+   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  
    const handleSubmit = (event) => {
     event.preventDefault();
     // const data = new FormData(event.currentTarget);
@@ -56,7 +64,7 @@ export default function Review(props) {
       )
       .then((response) => {
         console.log(response.status);
-        navigate('/')
+        props.handleNext();
       })
       .catch((error) => {
         console.error("There was an error!", error);
@@ -70,15 +78,15 @@ export default function Review(props) {
       <List disablePadding>
         {products.map((product) => (
           <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
+            <ListItemText primary={product.name} secondary={`Quantity: ${product.count}`} />
+            <Typography variant="body2"> &#8377; {product.subtotal_price}</Typography>
           </ListItem>
         ))}
 
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            $34.06
+            &#8377;{total}
           </Typography>
         </ListItem>
       </List>
@@ -87,24 +95,28 @@ export default function Review(props) {
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Shipping
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
+          <Typography gutterBottom>{addresses.name}</Typography>
+          <Typography gutterBottom>{addresses.city +', '+addresses.state+ ', ' +addresses.country+', '+ addresses.post_code}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Payment details
           </Typography>
           <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
+              <React.Fragment>
                 <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
+                <Typography gutterBottom>CardName: </Typography>
+                <Typography gutterBottom>card_number: </Typography>
+                <Typography gutterBottom>expiry_date: </Typography>
+                <Typography gutterBottom>cvv:</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
+                <Typography gutterBottom>{payments.card_name}</Typography>
+                <Typography gutterBottom>{payments.card_number}</Typography>
+                <Typography gutterBottom>{payments.expiry_date}</Typography>
+                <Typography gutterBottom>{payments.cvv}</Typography>
                 </Grid>
               </React.Fragment>
-            ))}
           </Grid>
         </Grid>
       </Grid>

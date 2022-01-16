@@ -39,5 +39,14 @@ App.route('api/check-out') do |r|
                 success: true
             }
         end
+
+        r.get do
+            ret = order.get_order_details
+
+            {
+                values: ret,
+                success: true
+            }
+        end
     end
 end

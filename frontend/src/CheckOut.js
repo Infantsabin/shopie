@@ -6,6 +6,7 @@ import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
+import Button from "@mui/material/Button";
 import StepLabel from "@mui/material/StepLabel";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -103,6 +104,13 @@ export default function Checkout() {
                   confirmation, and will send you an update when your order has
                   shipped.
                 </Typography>
+                <Button
+                    variant="contained"
+                  onClick={() => { navigate('/') }}
+                    sx={{ mt: 3, ml: 1 }}
+                  >
+                    Go to Dashboard
+                  </Button>
               </React.Fragment>
             ) : (
               <React.Fragment>
