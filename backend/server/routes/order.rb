@@ -1,5 +1,5 @@
 App.route('api/order') do |r|
-     @user = DB[:users].where(token: @token).first
+    @user = DB[:users].where(token: @token).first
     raise "Invalid Login Token.." unless @user
 
     r.on Integer do |id|
@@ -12,5 +12,16 @@ App.route('api/order') do |r|
                 success: true
             }
         end
+    end
+
+    r.get do 
+        ret = Order.where(user_id: @user[:id], status: 'c').first
+        {
+            values: {
+                order_id: ret.id,
+                user_name: ret.user.name,
+            },
+            success: true
+        }
     end
 end

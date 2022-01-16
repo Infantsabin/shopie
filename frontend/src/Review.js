@@ -1,9 +1,12 @@
 import * as React from 'react';
+import { useNavigate } from "react-router-dom";
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
+import ShippingNext from "./ShippingNext";
+import axios from "axios";
 
 const products = [
   {
@@ -37,7 +40,28 @@ const payments = [
   { name: 'Expiry date', detail: '04/2024' },
 ];
 
-export default function Review() {
+export default function Review(props) {
+  const navigate = useNavigate(); 
+   const handleSubmit = (event) => {
+    event.preventDefault();
+    // const data = new FormData(event.currentTarget);
+    const token = localStorage.getItem("token");
+
+    axios
+      .put(
+        `http://localhost:9292/api/check-out/${props.orderId}`,
+        {
+          token: token,
+        }
+      )
+      .then((response) => {
+        console.log(response.status);
+        navigate('/')
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  };
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -84,6 +108,7 @@ export default function Review() {
           </Grid>
         </Grid>
       </Grid>
+      <ShippingNext next={handleSubmit} isFinal={true}  />
     </React.Fragment>
   );
 }

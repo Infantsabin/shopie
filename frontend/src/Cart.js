@@ -272,6 +272,7 @@ export default function Cart() {
                 <CardActions className="checkout-btn" onClick={() => handleCheckout(orderId)}>
                   <Button
                     type="submit"
+                    disabled={cards.length === 0}
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}

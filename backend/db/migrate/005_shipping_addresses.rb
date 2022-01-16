@@ -11,8 +11,6 @@ Sequel.migration do
 			String   :state,             null: false
 			String   :post_code,         null: false
 			String   :country,           null: false
-			String   :price,	         null: false
-			String   :code,              null: false, unique: true
 			DateTime :created_at,        default: Sequel::CURRENT_TIMESTAMP
 			DateTime :updated_at,        default: Sequel::CURRENT_TIMESTAMP
 			DateTime :deleted_at,        default: nil
