@@ -8,11 +8,6 @@ import Grid from '@mui/material/Grid';
 import ShippingNext from "./ShippingNext";
 import axios from "axios";
 
-const products = [];
-
-const addresses = [];
-const payments = [];
-
 export default function Review(props) {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);

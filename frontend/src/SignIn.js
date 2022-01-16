@@ -47,7 +47,9 @@ export default function SignIn() {
                 progress: undefined,
                 });          
             localStorage.setItem('token', response.data.values.token);
-            navigate('/dashboard')
+            localStorage.setItem('role', response.data.values.role);
+          if (response.data.values.role === 'c') { navigate('/dashboard') }
+            else{navigate('admin')}
         })
         .catch(error => {
             toast.error('Oops!..Wrong credentials..!', {
