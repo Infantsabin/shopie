@@ -18,16 +18,13 @@ import Footer from './Footer'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-let cards = [];
 
 const theme = createTheme();
 
 export default function Dashboard() {
     const navigate = useNavigate();
     const [name, setName] = useState("Shopie User");
+    const [cards, setCards] = useState([]);
     const [loading , setLoading ] = useState(true);
     const [count, setCount] = useState(0);
     const token = localStorage.getItem('token')
@@ -38,7 +35,7 @@ export default function Dashboard() {
         } else {
             axios.get('http://localhost:9292/api/product')
             .then(response => {
-                cards = response.data.values
+                setCards(response.data.values)
                 setLoading(false)
             })
             .catch(error => {
@@ -73,7 +70,6 @@ export default function Dashboard() {
     }
   return (
     <ThemeProvider theme={theme}>
-      <ToastContainer />
         <Navbar name={name} count={count} />
       <main>
         {/* Hero unit */}

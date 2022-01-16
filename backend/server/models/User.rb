@@ -13,6 +13,10 @@ class User < Sequel::Model
 		validates_unique(:email, :message=>'already exists'){ |ds| ds.where(:deleted_at => nil) }
 	end
 
+	def name
+		return self.first_name + ' ' + self.last_name 
+	end
+
 	def self.verify data
 		user = User.where(email: data[:email]).first
 		raise "Invalid User" unless user
@@ -39,7 +43,7 @@ class User < Sequel::Model
 
 		cart_count = user.cart_items_dataset.sum(:count)
 		{
-			name: user.first_name + " " + user.last_name,
+			name: user.name,
 			email: user.email,
 			cart_count: cart_count || 0
 		}
