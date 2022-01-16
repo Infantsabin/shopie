@@ -43,6 +43,32 @@ def products_seed
     DB[:products].multi_insert(products_arr)
 end
 
+#Products seed
+def overall_discount_seed
+    discount_arr = [{
+        price_range: 200,
+        discount: '10'
+    },{
+        price_range: 500,
+        discount: '50'
+    },{
+        price_range: 1000,
+        discount: '120'
+    },{
+        price_range: 1500,
+        discount: '180'
+    },{
+        price_range: 2000,
+        discount: '250'
+    }
+    ]
+    
+    DB[:overall_discounts].multi_insert(discount_arr)
+end
+
+
+
 #seeds call
 users_seed
 products_seed
+overall_discount_seed

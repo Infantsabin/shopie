@@ -37,7 +37,7 @@ function Navbar(props) {
         },
       }));
     return (
-        <AppBar position="relative">
+        <AppBar position="fixed">
             <div>
                 <Toolbar className='navbar-menu'>
             <div>
@@ -49,13 +49,13 @@ function Navbar(props) {
                 <LightTooltip title={props.name}>
                     <Fingerprint sx={{ mr: 2 }} /> 
                 </LightTooltip>
-                <IconButton aria-label="cart" style={{marginRight: '14px'}}>
+                <IconButton aria-label="cart" style={{marginRight: '14px'}} onClick={()=> navigate('/cart')}>
                     <StyledBadge badgeContent={props.count} color="success">
-                        <ShoppingCartIcon style={{color: '#fff'}} onClick={()=> navigate('/cart')} />
+                        <ShoppingCartIcon style={{color: '#fff'}} />
                     </StyledBadge>
                 </IconButton>
-                <LightTooltip title="logout">
-                    <LogoutIcon sx={{ mr: 2 }} onClick={handleLogout} />
+                <LightTooltip title="logout" onClick={handleLogout}>
+                    <LogoutIcon sx={{ mr: 2 }} />
                 </LightTooltip>
             </div>
             </Toolbar>

@@ -104,7 +104,7 @@ export default function Dashboard() {
                 <CardHeader
                     avatar={
                     <Avatar sx={{ bgcolor: blue[600] }} aria-label="recipe">
-                        {card.name[0]}
+                        {card.discount}&#37; 
                     </Avatar>
                     }
                     title={card.name}
@@ -116,13 +116,18 @@ export default function Dashboard() {
                     image={card.image_url}
                     alt="dish"
                 />
-                <CardContent>
+                <CardContent >
                   <div className='cart-bottom'>
                   <Typography variant="body2" color="text.secondary">
-                     &#8377; {card.price}
-                  </Typography>
-                  <Button variant="outlined" startIcon={<AddShoppingCartIcon />} onClick={() => addToCart(card.id)}>Add to Cart</Button>
+                    <strike>&#8377; {card.price}</strike>
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                    &#8377; {card.discount_price}
+                    </Typography>
                   </div>
+                  <div>
+                      <Button variant="outlined" startIcon={<AddShoppingCartIcon />} onClick={() => addToCart(card.id)}>Add to Cart</Button>
+                    </div>
                 </CardContent>
                 </Card>
               </Grid>
