@@ -101,7 +101,9 @@ export default function Cart() {
       navigate("/");
     } else {
       axios
-        .get(`${process.env.REACT_APP_BASE_API_URL}/api/cart`, { params: { token: token } })
+        .get(`${process.env.REACT_APP_BASE_API_URL}/api/cart`, {
+          params: { token: token },
+        })
         .then((response) => {
           setName(response.data.values[0].user_name);
           setOrderId(response.data.values[0].order_id);

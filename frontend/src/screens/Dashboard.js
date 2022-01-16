@@ -64,7 +64,10 @@ export default function Dashboard() {
   const addToCart = (id) => {
     setCount(count + 1);
     axios
-      .post(`${process.env.REACT_APP_BASE_API_URL}/api/cart`, { product_id: id, token: token })
+      .post(`${process.env.REACT_APP_BASE_API_URL}/api/cart`, {
+        product_id: id,
+        token: token,
+      })
       .then((response) => {
         console.log(response.status);
       })
