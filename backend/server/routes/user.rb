@@ -1,10 +1,5 @@
 App.route('api/auth') do |r|
     r.on 'user' do
-        # r.on Integer do |id|
-        #     r.get do
-        #         p User.where(password_digest: @data[:password_digest]).first
-        #     end
-        # end
         r.post 'create' do
             User.create_user @data
 

@@ -31,7 +31,7 @@ end
 def products_seed
     products_arr = []
     5.times do |i|
-        product_name = Faker::Food.fruits
+        product_name = Faker::Name.name  
         products_arr.push(
             name: product_name,
             price: rand(1..1000),
