@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
-import "./Dashboard.css";
+import "asserts/css/Dashboard.css";
 
 function Navbar(props) {
     const navigate = useNavigate();

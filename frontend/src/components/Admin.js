@@ -54,7 +54,7 @@ export default function App() {
         if (!token) {
             navigate('/')
         } else {
-            axios.get('http://localhost:9292/api/product')
+            axios.get(`${process.env.REACT_APP_BASE_API_URL}/api/product`)
             .then(response => {
                 setCards(response.data.values)
             })
@@ -62,7 +62,7 @@ export default function App() {
                 console.error('There was an error!', error);
             });
 
-            axios.get('http://localhost:9292/api/auth/user', { params: {token: token}})
+            axios.get(`${process.env.REACT_APP_BASE_API_URL}/api/auth/user`, { params: {token: token}})
             .then(response => {
                 setName(response.data.values.name);     
             })

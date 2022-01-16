@@ -21,7 +21,7 @@ export default function Review(props) {
       navigate("/");
     } else {
       axios
-        .get("http://localhost:9292/api/cart", { params: { token: token } })
+        .get(`${process.env.REACT_APP_BASE_API_URL}/api/cart`, { params: { token: token } })
         .then((response) => {
           setProducts(response.data.values);
           setTotal(response.data.overall_total);

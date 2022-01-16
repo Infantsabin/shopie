@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Cart.css";
+import "asserts/css/Cart.css";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -11,15 +11,13 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Navbar from "../components/Navbar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -84,10 +82,14 @@ export default function Cart() {
   };
 
   const handleCheckout = (id) => {
-    axios.put(`http://localhost:9292/api/order/${id}`, { total: (total - basketDiscount), token: token })
+    axios
+      .put(`http://localhost:9292/api/order/${id}`, {
+        total: total - basketDiscount,
+        token: token,
+      })
       .then((response) => {
-        console.log(response.status)
-        navigate('/check-out')
+        console.log(response.status);
+        navigate("/check-out");
       })
       .catch((error) => {
         console.error("There was an error!", error);
@@ -99,7 +101,7 @@ export default function Cart() {
       navigate("/");
     } else {
       axios
-        .get("http://localhost:9292/api/cart", { params: { token: token } })
+        .get(`${process.env.REACT_APP_BASE_API_URL}/api/cart`, { params: { token: token } })
         .then((response) => {
           setName(response.data.values[0].user_name);
           setOrderId(response.data.values[0].order_id);
@@ -188,9 +190,6 @@ export default function Cart() {
                                 </Typography>
                               </Grid>
                               <Grid item>
-                                {/* <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                                Remove
-                              </Typography> */}
                                 <ButtonGroup>
                                   <Button
                                     aria-label="reduce"
@@ -244,58 +243,93 @@ export default function Cart() {
                   <Typography gutterBottom variant="h5" component="div">
                     Cart Details:
                   </Typography>
-                  <Typography color="text.secondary" style={{marginBottom: '10px', fontWeight:'600'}}>
+                  <Typography
+                    color="text.secondary"
+                    style={{ marginBottom: "10px", fontWeight: "600" }}
+                  >
                     Subtotal:
                   </Typography>
                   {cards.map((card) => (
-                      <Grid container>
-                        <Grid md={6}>
-                        <Typography key={card.id} variant="body2" color="text.secondary">
-                           {card.name}:
-                         </Typography>
-                        </Grid>
-                        <Grid md={6}>
-                        <Typography key={card.id} variant="body2" color="text.secondary">
-                           {card.count} x {card.price} =  &#8377; {card.subtotal_price}
-                         </Typography>
-                        </Grid>
-                      </Grid>
-                  ))}
-                     
-                  {basketDiscount && basketDiscount !== 0 ? (
-                    <>
-                       <Grid container style={{marginTop: '10px'}}>
-                          <Grid md={6}>
-                            <Typography color="text.secondary" style={{fontWeight:'600'}}>
-                              Basket Discount:
-                            </Typography>
-                      </Grid>
-                          <Grid md={6}>
-                            <Typography color="text.secondary">
-                              &#8377; {basketDiscount} { `(Basket rate > ₹${basketPriceRange})`}
-                            </Typography>
-                      </Grid>
-                      </Grid>
-                    <Grid container style={{marginTop: '10px'}}>
-                      <Grid md={6} >
-                            <Typography color="text.secondary" style={{fontWeight:'700'}}>
-                                  Total:
-                            </Typography>
+                    <Grid container>
+                      <Grid md={6}>
+                        <Typography
+                          key={card.id}
+                          variant="body2"
+                          color="text.secondary"
+                        >
+                          {card.name}:
+                        </Typography>
                       </Grid>
                       <Grid md={6}>
-                            <Typography color="text.secondary">
-                                  <strike>&#8377; {total}</strike> {' '} &#8377; {total - basketDiscount}
-                            </Typography>
-                      </Grid>
-                      </Grid>
-                      </>
-                    ) : (
-                        <Typography color="text.secondary">
-                            Total:  &#8377; {total}
+                        <Typography
+                          key={card.id}
+                          variant="body2"
+                          color="text.secondary"
+                        >
+                          {card.count} x {card.price} = &#8377;{" "}
+                          {card.subtotal_price}
                         </Typography>
-                    )}
+                      </Grid>
+                    </Grid>
+                  ))}
+
+                  {basketDiscount && basketDiscount !== 0 ? (
+                    <>
+                      <Grid container style={{ marginTop: "10px" }}>
+                        <Grid md={6}>
+                          <Typography
+                            color="text.secondary"
+                            style={{ fontWeight: "600" }}
+                          >
+                            Basket Discount:
+                          </Typography>
+                        </Grid>
+                        <Grid md={6}>
+                          <Typography color="text.secondary">
+                            &#8377; {basketDiscount}{" "}
+                            {`(Basket rate > ₹${basketPriceRange})`}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid container style={{ marginTop: "10px" }}>
+                        <Grid md={6}>
+                          <Typography
+                            color="text.secondary"
+                            style={{ fontWeight: "700" }}
+                          >
+                            Total:
+                          </Typography>
+                        </Grid>
+                        <Grid md={6}>
+                          <Typography color="text.secondary">
+                            <strike>&#8377; {total}</strike> &#8377;{" "}
+                            {total - basketDiscount}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </>
+                  ) : (
+                    <Grid container style={{ marginTop: "10px" }}>
+                      <Grid md={6}>
+                        <Typography
+                          color="text.secondary"
+                          style={{ fontWeight: "700" }}
+                        >
+                          Total:
+                        </Typography>
+                      </Grid>
+                      <Grid md={6}>
+                        <Typography color="text.secondary">
+                          &#8377; {total}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  )}
                 </CardContent>
-                <CardActions className="checkout-btn" onClick={() => handleCheckout(orderId)}>
+                <CardActions
+                  className="checkout-btn"
+                  onClick={() => handleCheckout(orderId)}
+                >
                   <Button
                     type="submit"
                     disabled={cards.length === 0}
@@ -311,11 +345,6 @@ export default function Cart() {
           </Grid>
         </Container>
       </main>
-      {/* Footer */}
-      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
-        <Footer />
-      </Box>
-      {/* End footer */}
     </ThemeProvider>
   );
 }

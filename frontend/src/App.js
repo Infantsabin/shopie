@@ -1,10 +1,10 @@
-import './App.css';
-import SignIn from './SignIn';
+import 'asserts/css/App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Checkout from './CheckOut';
-import Dashboard from './Dashboard';
-import SignUp from './SignUp';
-import Cart from './Cart';
+import SignIn from 'screens/SignIn';
+import Checkout from 'screens/CheckOut';
+import Dashboard from 'screens/Dashboard';
+import SignUp from 'screens/SignUp';
+import Cart from 'screens/Cart';
 
 function App() {
   // const token = localStorage.getItem('user')
